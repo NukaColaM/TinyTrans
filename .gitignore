@@ -1,0 +1,26 @@
+# Build artifacts
+bin/
+obj/
+TestResults/
+coverage/
+artifacts/
+*.trx
+
+# IDE and editor user state
+.vs/
+*.user
+*.suo
+
+# Logs
+logs/
+*.log
+
+# OS-generated files
+Thumbs.db
+.DS_Store
+
+# Local scratch outside the tracked docs workflow
+.scratch/
+
+# Publish output
+publish/
