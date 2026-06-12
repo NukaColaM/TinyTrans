@@ -123,8 +123,10 @@
                                  Foreground="#333333"
                                  TextChanged="OutputTextBox_TextChanged">
                             <TextBox.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Copy" Command="ApplicationCommands.Copy" />
+                                <ContextMenu Style="{StaticResource FlatContextMenuStyle}">
+                                    <MenuItem Header="Copy"
+                                              Command="ApplicationCommands.Copy"
+                                              Style="{StaticResource FlatMenuItemStyle}" />
                                 </ContextMenu>
                             </TextBox.ContextMenu>
                         </TextBox>
