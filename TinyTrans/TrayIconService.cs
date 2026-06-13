@@ -70,6 +70,8 @@ public class TrayIconService : IDisposable
             // Segoe UI is the native Windows UI font; ~10pt with roomier item
             // padding (set per item below) gives a modern, less cramped menu.
             Font = new Font("Segoe UI", 10f),
+            // Widen the image margin to provide more space for centered marks
+            ImageScalingSize = new System.Drawing.Size(32, 32),
         };
 
         // Header: a distinct title row plus a muted shortcut hint, tagged so the

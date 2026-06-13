@@ -159,7 +159,7 @@ internal sealed class TrayMenuRenderer : ToolStripProfessionalRenderer
         // item-relative space is the strip; vertical centering uses item height.
         float gutterWidth = _gutterWidth > 0 ? _gutterWidth : rect.Right;
         float gutterHeight = e.Item.Height;
-        float markSize = Math.Min(gutterWidth, rect.Height);
+        float markSize = TrayMarkGeometry.MarkSizeForGutter(gutterWidth, rect.Height);
         var anchor = TrayMarkGeometry.CenteredInGutter(gutterWidth, gutterHeight, markSize);
 
         var previousMode = e.Graphics.SmoothingMode;

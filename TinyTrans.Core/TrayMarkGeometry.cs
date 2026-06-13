@@ -38,18 +38,31 @@ public readonly record struct CheckGeometry(MarkPoint Left, MarkPoint Mid, MarkP
 public static class TrayMarkGeometry
 {
     /// <summary>
-    /// A square anchor for the mark, centered in the image-margin gutter strip
-    /// (<paramref name="gutterWidth"/> x <paramref name="gutterHeight"/>) rather
-    /// than pinned to the far-left edge of WinForms' narrow check rectangle.
-    /// This is the fix for marks reading as left-aligned: the renderer captures
-    /// the real margin strip from <c>OnRenderImageMargin</c>, calls this, and
-    /// draws the mark into the returned box. Text stays left-aligned.
+    /// A square anchor for the mark, right-aligned in the image-margin gutter strip
+    /// (<paramref name="gutterWidth"/> x <paramref name="gutterHeight"/>) with a small
+    /// margin from the right edge. This positions marks closer to the text, making them
+    /// appear horizontally centered in the overall menu layout rather than stranded at
+    /// the far left edge.
     /// </summary>
     public static AnchorBox CenteredInGutter(float gutterWidth, float gutterHeight, float markSize)
     {
-        float x = (gutterWidth - markSize) / 2f;
+        // Right-align with 2px margin from the gutter's right edge
+        float x = gutterWidth - markSize - 2f;
         float y = (gutterHeight - markSize) / 2f;
         return new AnchorBox(x, y, markSize);
+    }
+
+    /// <summary>
+    /// Calculate the appropriate mark size for a gutter strip. Returns a size
+    /// proportional to the gutter width (~60%) to leave visible centering space,
+    /// rather than using the full rect height which would make the mark appear
+    /// left-aligned even when mathematically centered.
+    /// </summary>
+    public static float MarkSizeForGutter(float gutterWidth, float rectHeight)
+    {
+        // Use 60% of gutter width to ensure visible centering space while keeping
+        // marks prominent. Constrain to rectHeight to avoid overflow.
+        return Math.Min(gutterWidth * 0.6f, rectHeight);
     }
 
     /// <summary>
