@@ -51,6 +51,7 @@
                              BorderThickness="0"
                              Padding="6,4"
                              Foreground="#333333"
+                             ContextMenu="{x:Null}"
                              TextChanged="InputTextBox_TextChanged"
                              PreviewKeyDown="InputTextBox_PreviewKeyDown" />
                 </Border>
@@ -121,15 +122,8 @@
                                  BorderThickness="0"
                                  Padding="6,4"
                                  Foreground="#333333"
-                                 TextChanged="OutputTextBox_TextChanged">
-                            <TextBox.ContextMenu>
-                                <ContextMenu Style="{StaticResource FlatContextMenuStyle}">
-                                    <MenuItem Header="Copy"
-                                              Command="ApplicationCommands.Copy"
-                                              Style="{StaticResource FlatMenuItemStyle}" />
-                                </ContextMenu>
-                            </TextBox.ContextMenu>
-                        </TextBox>
+                                 ContextMenu="{x:Null}"
+                                 TextChanged="OutputTextBox_TextChanged" />
 
                         <!-- Loading overlay (dimmed during translation) -->
                         <Border x:Name="LoadingOverlay"

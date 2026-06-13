@@ -1,6 +1,8 @@
 # Beautify Tray Icon Menu
 
-**Status**: active
+**Status**: dropped
+
+> Superseded by `../2026-06-13-traditional-tray-menu/spec.md` (2026-06-13): the custom flat-light tray renderer and its supporting geometry were removed in favor of the traditional WinForms menu. The four tasks below were implemented but have since been reverted.
 
 ## Problem
 

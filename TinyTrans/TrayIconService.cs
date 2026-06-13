@@ -11,11 +11,6 @@ public class TrayIconService : IDisposable
     private readonly MainWindow _mainWindow;
     private readonly StartAtLoginService _startAtLoginService;
 
-    // Roomier rows than the WinForms default: extra vertical breathing room on
-    // actionable items, and a touch more on the header block to set it apart.
-    private static readonly System.Windows.Forms.Padding ItemPadding = new(0, 4, 0, 4);
-    private static readonly System.Windows.Forms.Padding HeaderPadding = new(0, 5, 0, 3);
-
     public TrayIconService(MainWindow mainWindow, StartAtLoginService startAtLoginService)
     {
         _mainWindow = mainWindow;
@@ -64,26 +59,13 @@ public class TrayIconService : IDisposable
 
     private void ShowContextMenu()
     {
-        var menu = new System.Windows.Forms.ContextMenuStrip
-        {
-            Renderer = new TrayMenuRenderer(),
-            // Segoe UI is the native Windows UI font; ~10pt with roomier item
-            // padding (set per item below) gives a modern, less cramped menu.
-            Font = new Font("Segoe UI", 10f),
-            // Widen the image margin to provide more space for centered marks
-            ImageScalingSize = new System.Drawing.Size(32, 32),
-        };
+        var menu = new System.Windows.Forms.ContextMenuStrip();
 
-        // Header: a distinct title row plus a muted shortcut hint, tagged so the
-        // renderer can style them as a header block rather than greyed-out rows.
+        // Header: a disabled title row plus a disabled shortcut hint, shown as
+        // standard greyed-out informational rows above the first separator.
         menu.Items.Add(new System.Windows.Forms.ToolStripMenuItem("TinyTrans")
         {
             Enabled = false,
-            Tag = TrayMenuItemRole.HeaderTitle,
-            Padding = HeaderPadding,
-            // Bold here (the menu disposes its items) rather than allocating a
-            // font on every paint in the renderer.
-            Font = new Font("Segoe UI", 10f, System.Drawing.FontStyle.Bold),
         });
         var shortcutLabel = _mainWindow.IsToggleShortcutRegistered
             ? $"Show/hide: {_mainWindow.ToggleShortcutText}"
@@ -91,14 +73,12 @@ public class TrayIconService : IDisposable
         menu.Items.Add(new System.Windows.Forms.ToolStripMenuItem(shortcutLabel)
         {
             Enabled = false,
-            Tag = TrayMenuItemRole.HeaderHint,
-            Padding = HeaderPadding,
         });
         menu.Items.Add(new System.Windows.Forms.ToolStripSeparator());
 
         // Language radio items
-        var enItem = new System.Windows.Forms.ToolStripMenuItem("English") { Checked = _mainWindow.TargetLanguage == "EN", Tag = TrayMenuItemRole.LanguageRadio, Padding = ItemPadding };
-        var zhItem = new System.Windows.Forms.ToolStripMenuItem("Chinese") { Checked = _mainWindow.TargetLanguage == "ZH", Tag = TrayMenuItemRole.LanguageRadio, Padding = ItemPadding };
+        var enItem = new System.Windows.Forms.ToolStripMenuItem("English") { Checked = _mainWindow.TargetLanguage == "EN" };
+        var zhItem = new System.Windows.Forms.ToolStripMenuItem("Chinese") { Checked = _mainWindow.TargetLanguage == "ZH" };
 
         enItem.Click += (s, e) =>
         {
@@ -123,8 +103,6 @@ public class TrayIconService : IDisposable
         {
             Checked = _mainWindow.IsAlwaysOnTop,
             CheckOnClick = true,
-            Tag = TrayMenuItemRole.Toggle,
-            Padding = ItemPadding,
         };
         alwaysOnTopItem.Click += (s, e) =>
         {
@@ -137,8 +115,6 @@ public class TrayIconService : IDisposable
         {
             Checked = IsStartAtLoginEnabled(),
             CheckOnClick = true,
-            Tag = TrayMenuItemRole.Toggle,
-            Padding = ItemPadding,
         };
         startAtLoginItem.Click += (s, e) =>
         {
